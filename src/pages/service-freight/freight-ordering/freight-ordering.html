@@ -1,0 +1,190 @@
+<!--
+  Generated template for the FreightOrderingPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>購買箱子</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <!-- Toast -->
+  <div [ngClass]="{'snackbar': true, 'show': isEnsureBox}">
+    <label class="custom-alert">請確認箱子與數量</label>
+  </div>
+  <div [ngClass]="{'snackbar': true, 'show': isEnsureGift}">
+    <label class="custom-alert">請選擇贈品</label>
+  </div>
+  <div [ngClass]="{'snackbar': true, 'show': isEnsureBoxSelected}">
+    <label class="custom-alert">請選擇箱子</label>
+  </div>
+  <div [ngClass]="{'snackbar': true, 'show': isEnsureInputNumber}">
+    <label class="custom-alert">請選擇數量</label>
+  </div>
+
+  <!-- Cart list -->
+  <h5 class="title-1 block-title">購買清單</h5>
+  <div class="text-center" *ngIf="!isTableList">
+    <h5 calss="title-1" style="color:#969696">沒有任何購買</h5>
+  </div>
+  <ul class="list-group mb-3" *ngIf="isTableList">
+    <li
+      class="list-group-item d-flex justify-content-between align-items-center"
+      *ngFor="let item of tableList; let i = index;">
+      <div>
+        <label class="badge badge-primary badge-pill" style="margin-right: 0.5rem;">{{ item.boxAmount }}</label>
+        {{ item.boxID }}
+      </div>
+      <div>
+        <button class="btn btn-primary btn-sm" type="button" (click)="toCartList(item)">修改</button>
+        <button class="btn btn-danger btn-sm" type="button" (click)="deleteConfirm(i)">刪除</button>
+      </div>
+    </li>
+  </ul>
+
+  <!-- Add purchase -->
+<div class="py-3">
+  <h5 class="title-1 block-title">新增購買</h5>
+
+  <div class="input-group input-group-lg mb-3">
+    <div class="input-group-prepend">
+      <label class="input-group-text" for="inputGroupSelect01">箱子編號</label>
+    </div>
+    <select
+      [ngClass]="{'custom-select': true, 'input-border': !isEnsureBoxes }"
+      id="inputGroupSelect01"
+      [(ngModel)]="boxValue"
+      (ngModelChange)="selectBox()"
+      [disabled]="isEnsureBoxes">
+      <option value="" disabled>Choose...</option>
+      <option *ngFor="let box of boxList" [value]="box['FBKey']" >{{ box['FBKey'] }}</option>
+    </select>
+  </div>
+
+  <div class="input-group input-group-lg mb-3">
+    <div class="input-group-prepend">
+      <label class="input-group-text" for="inputGroupSelect01">購買數量</label>
+      <button
+        [ngClass]="{'btn': true, 'btn-secondary': disableNumberInput() || (boxNumber == 0), 'btn-primary': !disableNumberInput() && (boxNumber != 0)}"
+        type="button"
+        (click)="decreaseBox()"
+        [disabled]="disableNumberInput()">-</button>
+    </div>
+    <input
+      [ngClass]="{'input-border': !disableNumberInput(), 'active-input-style': !disableNumberInput() }"
+      [(ngModel)]="boxNumber"
+      type="number"
+      class="form-control text-center"
+      min="0"
+      disabled>
+    <div class="input-group-append" id="button-addon4">
+      <button
+        [ngClass]="{'btn': true, 'btn-secondary': disableNumberInput(), 'btn-primary': !disableNumberInput()}"
+        type="button"
+        (click)="increaseBox()"
+        [disabled]="disableNumberInput()">+</button>
+    </div>
+  </div>
+  <div class="input-group input-group-lg mb-3">
+    <div class="input-group-prepend">
+      <label class="input-group-text" id="basic-addon1">箱子尺寸</label>
+    </div>
+    <input type="text" class="form-control" [(ngModel)]="selectBoxInfo['FBSize']" aria-label="Username" aria-describedby="basic-addon1" disabled>
+  </div>
+  <div class="input-group input-group-lg mb-3">
+    <div class="input-group-prepend">
+      <label class="input-group-text" id="basic-addon1">單箱訂金</label>
+    </div>
+    <input type="text" class="form-control" [(ngModel)]="selectBoxInfo['FBDeposit']" aria-label="Username" aria-describedby="basic-addon1" disabled>
+    <div class="input-group-append">
+      <label class="input-group-text">NTD</label>
+    </div>
+  </div>
+    <div class="input-group input-group-lg mb-3">
+    <div class="input-group-prepend">
+      <label class="input-group-text" id="basic-addon1">單箱尾款</label>
+    </div>
+    <input type="text" class="form-control" [(ngModel)]="selectBoxInfo['FBBlance']" aria-label="Username" aria-describedby="basic-addon1" disabled>
+    <div class="input-group-append">
+      <label class="input-group-text">NTD</label>
+    </div>
+  </div>
+
+  <div class="mb-3 " *ngIf="!isEnsureBoxes">
+    <button class="btn btn-outline-primary " type="button" (click)="ensureBoxes()">確定箱子與數量</button>
+  </div>
+  <div class="mb-3 " *ngIf="isEnsureBoxes">
+    <button class="btn btn-danger" type="button" (click)="resetBoxes()">重新設定箱子與數量</button>
+  </div>
+
+
+  <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
+    <div class="input-group input-group-lg">
+      <div class="input-group-prepend">
+        <div class="input-group-text" id="btnGroupAddon">加購贈品</div>
+      </div>
+    </div>
+
+
+    <ng-container *ngIf="selectBoxInfo['FBGifts']">
+      <div class="btn-group" role="group" aria-label="First group">
+        <button
+          *ngIf = "isGiftRemain"
+          type="button"
+          [ngClass]="{'btn': true, 'btn-secondary': !isEnsureBoxes, 'btn-primary': isEnsureBoxes}"
+          (click)="selectGiftModal()"
+          [disabled]="!isEnsureBoxes">
+          選擇贈品 <label *ngIf="isEnsureBoxes" class="badge badge-light">0 / {{ boxNumber }}</label>
+        </button>
+        <button
+          *ngIf = "!isGiftRemain"
+          type="button"
+          class="btn btn-danger"
+          (click)="selectGiftModal()">
+          查看贈品 <label *ngIf="isEnsureBoxes" class="badge badge-light">{{ boxNumber }} / {{ boxNumber }}</label>
+        </button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="!(selectBoxInfo['FBGifts'])">
+      <div class="text-center">
+        <h5 style="color:#969696; margin-bottom: 0; padding-top: 0.75rem; padding-left: 1rem;">無贈品</h5>
+      </div>
+    </ng-container>
+
+  </div>
+  <div class="mb-3 ">
+    <button class="btn btn-outline-primary" type="button" (click)="addList()">新增購買</button>
+  </div>
+</div>
+
+<div class="py-3">
+  <!-- Count Total Amount -->
+  <h5 class="title-1 block-title">計算</h5>
+  <div class="input-group input-group-lg mb-3 mt-4">
+    <div class="input-group-prepend">
+      <label class="input-group-text text-right" id="basic-addon1">訂金總額</label>
+    </div>
+    <input type="number" class="form-control" [value]="totalDeposit" aria-label="Username" aria-describedby="basic-addon1" disabled>
+    <div class="input-group-append">
+      <label class="input-group-text">NTD</label>
+    </div>
+  </div>
+  <div class="input-group input-group-lg mb-3">
+    <div class="input-group-prepend">
+      <label class="input-group-text text-right" id="basic-addon1">尾款總額</label>
+    </div>
+    <input type="number" class="form-control" [value]="totalBalance" aria-label="Username" aria-describedby="basic-addon1" disabled>
+    <div class="input-group-append">
+      <label class="input-group-text">NTD</label>
+    </div>
+  </div>
+</div>
+
+  <button class="btn btn-primary btn-block" type="button" [disabled]="!isTableList" (click)="toEnsuerIdPage()">身份確認</button>
+
+</ion-content>

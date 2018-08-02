@@ -1,0 +1,124 @@
+<!--
+  Generated template for the FreightOrderCheckPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>訂單確認</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ng-container *ngFor="let order of orderInfo; let i = index">
+
+    <p class="custom-title mb-2">{{ order.FBKey }}</p>
+    <ion-card>
+      <div class="container w-100" style="height: 12rem; background-color: #e0e0e0;">
+        <div class="row h-100">
+          <div class="col-6 mx-auto text-center align-self-center">
+            <img [src]="order.FBPics || ('assets/imgs/archive.png')" alt="">
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+
+        <div class="row pb-0">
+          <div class="mb-3 input-group">
+            <div class="input-group-prepend">
+              <label class="custom-text-center">箱子編號</label>
+            </div>
+            <input type="text" class="form-control" [value]="order.FBKey" disabled>
+          </div>
+          <div class="mb-3 input-group">
+            <div class="input-group-prepend">
+              <label class="custom-text-center">箱子尺寸</label>
+            </div>
+            <input type="text" class="form-control" [value]="order.FBSize" disabled>
+          </div>
+          <div class="mb-3 input-group">
+            <div class="input-group-prepend">
+              <label class="custom-text-center">所屬地區</label>
+            </div>
+            <input type="text" class="form-control" [value]="twAreaAllow(i)" disabled>
+          </div>
+          <div class="mb-3 input-group">
+            <div class="input-group-prepend">
+              <label class="custom-text-center">限制寄出</label>
+            </div>
+            <input type="text" class="form-control" [value]="bindCountry(i)" disabled>
+          </div>
+        </div>
+
+        <div class="mb-3 input-group">
+          <div class="input-group-prepend">
+            <label class="custom-text-center">預付款</label>
+          </div>
+          <input type="text" class="form-control" [value]="(order.FBDeposit * order.boxChoosenAmount)" disabled>
+        </div>
+        <div class="mb-3 input-group">
+          <div class="input-group-prepend">
+            <label class="custom-text-center">箱子尾款</label>
+          </div>
+          <input type="text" class="form-control" [value]="(order.FBBlance * order.boxChoosenAmount)" disabled>
+        </div>
+
+
+        <div class="mb-3 input-group">
+          <div class="input-group-prepend">
+            <label class="custom-text-center">購買數量</label>
+          </div>
+          <input type="text" class="form-control" [value]="order.boxChoosenAmount" disabled>
+        </div>
+
+      </div>
+
+    </ion-card>
+
+    <ion-card *ngFor="let gift of gifts(i);">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-5>
+            <img [src]=" gift.info.FGPics || ('assets/imgs/gift.png')" alt="">
+          </ion-col>
+          <ion-col col-7>
+            <p word-wrap><strong>箱子編號</strong>：{{ order.FBKey }}</p>
+            <p word-wrap><strong>贈品名稱</strong>：{{ gift.info.FGName }}</p>
+            <p word-wrap><strong>加購價</strong>：{{ gift.info.FGPrice * gift.amount }}</p>
+            <p word-wrap><strong>數量</strong>：{{ gift.amount }}</p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </ng-container>
+
+</ion-content>
+
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-6>
+          <button ion-button block color="danger" icon-end (click)="reviseOrder()">
+            修改訂單
+            <ion-icon name="refresh"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col col-6>
+          <button ion-button block color="primary" icon-end (click)="submit()">
+            訂單確認
+            <ion-icon name="checkbox"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>
+

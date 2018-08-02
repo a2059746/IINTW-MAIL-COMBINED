@@ -1,0 +1,132 @@
+<!--
+  Generated template for the FreightOrderingBuyerInfoPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>購買箱子</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <!-- Toast -->
+  <div [ngClass]="{'snackbar': true, 'show': status.isInputCompleted}">
+    <p class="custom-alert mb-0" *ngIf="!order.Name" role="alert">．請填寫姓名．</p>
+    <p class="custom-alert mb-0" *ngIf="!order.Address" role="alert">．請"填寫地址"或"上傳圖片"．</p>
+    <p class="custom-alert mb-0" *ngIf="!status.payMethod" role="alert">．請選擇付款方式．</p>
+  </div>
+
+
+
+  <!-- <div [ngClass]="{'snackbar': true, 'show': status.isEnsurePayMethod}">
+    <label class="custom-alert">請選擇付款方式</label>
+  </div>
+  <div [ngClass]="{'snackbar': true, 'show': status.isEnsurePayMethod}">
+    <label class="custom-alert">請填寫姓名</label>
+  </div>
+  <div [ngClass]="{'snackbar': true, 'show': status.isEnsurePayMethod}">
+    <label class="custom-alert">請"填寫地址"或"上傳圖片"</label>
+  </div> -->
+
+
+  <ng-container *ngIf="status.isLoadResources">
+
+      <div class="mb-3 input-group input-group-lg">
+        <div class="input-group-prepend">
+          <label class="input-group-text">購買者姓名</label>
+        </div>
+        <input type="text" class="form-control" placeholder="Your name..." [(ngModel)]="order.Name">
+      </div>
+      <div class="mb-3 input-group input-group-lg">
+        <div class="input-group-prepend">
+          <label class="input-group-text">購買者電話</label>
+        </div>
+        <input type="number" class="form-control" [(ngModel)]="order.Phone" disabled>
+      </div>
+      <div class="input-group input-group-lg justify-content-between">
+        <div class="input-group-prepend">
+          <label class="input-group-text">台灣收貨地址</label>
+        </div>
+        <button class="btn btn-danger btn-lg" type="submit" (click)="editAddress()" *ngIf="!status.isClickEditAddress">編輯地址</button>
+        <button class="btn btn-primary btn-lg" type="submit" (click)="ensureAddress()" *ngIf="status.isClickEditAddress">確定</button>
+      </div>
+      <input
+        type="text"
+        class="mb-3 form-control"
+        style="padding: 0.5rem 1rem;"
+        placeholder="Your address..."
+        [(ngModel)]="order.Address"
+        [disabled]="!status.isClickEditAddress">
+      <div *ngIf="status.isClickEditAddress">
+        <div class="text-danger">
+          <p>Please input a Taiwan address in the field or <br>Upload a photo including a Taiwan address</p>
+        </div>
+        <div class="container w-100 mb-3 mx-auto" style="height: 17.5rem; background-color: #e0e0e0;">
+          <div class="row h-100">
+            <div class="col-6 mx-auto text-center align-self-center">
+              <img src="assets/imgs/camera.png" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-group input-group-lg">
+        <div class="input-group-prepend">
+          <label class="input-group-text">其他備註</label>
+        </div>
+      </div>
+      <textarea class="mb-3 form-control" style="height: 12rem;" placeholder="Write something..." aria-label="With textarea"></textarea>
+
+      <div class="mb-3 input-group input-group-lg">
+        <div class="input-group-prepend">
+          <label class="input-group-text">訂金總額</label>
+        </div>
+        <input type="text" class="form-control" [(ngModel)]="order.totalDeposit" disabled>
+        <div class="input-group-append">
+          <label class="input-group-text">NTD</label>
+        </div>
+      </div>
+      <div class="mb-3 input-group input-group-lg">
+        <div class="input-group-prepend">
+          <label class="input-group-text">尾款總額</label>
+        </div>
+        <input type="number" class="form-control" [(ngModel)]="order.totalBalance" disabled>
+        <div class="input-group-append">
+          <label class="input-group-text">NTD</label>
+        </div>
+      </div>
+
+      <div class="mb-3 input-group input-group-lg">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="inputGroupSelect01">付款方式</label>
+        </div>
+        <select class="custom-select" [(ngModel)]="status.payMethod">
+          <option value="0" selected disabled>Choose...</option>
+          <option value="1">貨到付款</option>
+          <option value="2">超商代收</option>
+        </select>
+      </div>
+
+      <div class="my-5 col-8 mx-auto">
+        <button class="btn btn-primary btn-lg btn-block" type="submit" (click)="submit()">確認送出</button>
+      </div>
+
+
+      <div class="row">
+        <div class="col-6 pl-0">
+          <button class="py-5 btn btn-primary btn-lg btn-block" type="submit" disabled>產生繳款條碼</button>
+        </div>
+        <div class="col-6 pr-0">
+          <button class="py-5 btn btn-primary btn-lg btn-block" type="submit" disabled>重新上傳繳費收據</button>
+        </div>
+      </div>
+
+  </ng-container>
+
+
+</ion-content>

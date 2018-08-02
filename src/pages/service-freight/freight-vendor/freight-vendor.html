@@ -1,0 +1,48 @@
+<!--
+  Generated template for the FreightVendorPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>郵寄廠商</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div class="py-3">
+    <div class="container">
+      <div class="row">
+        <div class="mx-auto col-5">
+            <img
+              class="d-block img-fluid rounded-circle mx-auto"
+              src="assets/icon/delivery-cart.png"
+              data-holder-rendered="true"
+              width="200">
+        </div>
+        <div class="pt-3 pb-2 text-center col-12">
+          <h3 class="text-center mb-0">{{ vendor['Name'] }}</h3>
+        </div>
+        <div id="vendorIntro" class="py-0 col-12 text-center">
+          <p>{{ vendor['Desc-zh-cmn-Hant'] }}</p>
+        </div>
+        <div class="mx-auto text-center col-8">
+          <button type="button" class="btn btn-content btn-lg btn-block" (click)="goBoxsPage()">購買箱子</button>
+        </div>
+      </div>
+      <hr style="border-width: 1px">
+      <div class="row">
+        <div class="text-center col-12">
+          <h4 class="text-center mb-0"><strong>- <span class="pictureTitle">郵寄介紹</span> -</strong></h4>
+        </div>
+        <div class="py-3">
+          <img imageViewer [src]="vendor['pimg-zh-cmn-Hant']" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

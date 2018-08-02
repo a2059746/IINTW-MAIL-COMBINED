@@ -1,0 +1,37 @@
+page-fmodal-cartlist {
+
+}
+
+.note-md {
+  color: #848484;
+}
+
+.list-header-md {
+  margin-bottom: 0;
+    .input-wrapper {
+      font-size: 2rem;
+      text-decoration: underline;
+      text-underline-position: under;
+      text-decoration-color: #007bff;
+    }
+}
+
+.btn {
+  border-radius: 0;
+}
+
+.input-able-style {
+  border: 1px solid #007bff;
+  color: #000000;
+}
+
+.input-enable-style {
+  border: 1px solid #ced4da;
+  color: #000000;
+}
+
+.delete-text {
+  margin-right: 25px !important;
+  color: red;
+  font-size: 1.5rem;
+}

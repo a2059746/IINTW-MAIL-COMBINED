@@ -1,0 +1,123 @@
+<!--
+  Generated template for the FreightVendorgiftsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>贈品介紹</ion-title>
+  </ion-navbar>
+  <div class="container">
+    <div class="row p-0">
+      <div class="col">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <label class="custom-text-center">購買箱子數</label>
+          </div>
+          <input type="text" class="form-control text-center" [value]="totalChoosenBoxes || '0'" disabled>
+        </div>
+      </div>
+      <div class="col">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <label class="custom-text-center">可選贈品數</label>
+          </div>
+          <input type="text" [ngClass]="{'form-control': true, 'text-center': true, 'text-danger': (totalGiftsHasChoosed == totalGiftsCanChoosed)}" [value]="totalGiftsCanChoosed || '0'" disabled>
+        </div>
+      </div>
+      <div class="col">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <label class="custom-text-center">已選贈品數</label>
+          </div>
+          <input
+            type="text"
+            [ngClass]="{'form-control': true, 'text-center': true, 'text-success': (totalGiftsHasChoosed != totalGiftsCanChoosed), 'text-danger': (totalGiftsHasChoosed == totalGiftsCanChoosed)}"
+            [value]="totalGiftsHasChoosed || '0'"
+            disabled>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-header>
+
+
+<ion-content padding>
+
+  <!-- Toast -->
+  <!-- <div [ngClass]="{'snackbar': true, 'show': isEnsureChoosenDone}">
+    <label class="custom-alert">贈品尚未選購完畢</label>
+  </div> -->
+
+  <ng-container *ngIf="isCtrl.loadingReady">
+
+    <ng-container *ngFor="let box of choosenBox; let bi = index;">
+
+      <p class="custom-title mb-2">{{ box.FBKey }}</p>
+      <p class="text-success mb-2" *ngIf="(box.hasChoosenGift < box.boxChoosenAmount)">選擇贈品 {{ box.hasChoosenGift }} / {{ box.boxChoosenAmount }}</p>
+      <p class="text-danger mb-2" *ngIf="(box.hasChoosenGift == box.boxChoosenAmount)">已達到選購上限</p>
+      <ion-card *ngFor="let gift of gifts(bi);let gi = index;">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-5>
+              <img [src]=" gift.FGPics || ('assets/imgs/gift.png')" alt="">
+            </ion-col>
+            <ion-col col-7>
+              <p word-wrap><strong>箱子編號</strong>：{{ box.FBKey }}</p>
+              <p word-wrap><strong>贈品名稱</strong>：{{ gift.FGName }}</p>
+              <p word-wrap><strong>加購價</strong>：{{ (gift.FGPrice * box.giftsInfo[gi].giftAmount) }}</p>
+              <div class="input-group mt-2">
+                <div class="input-group-prepend">
+                  <label class="custom-style" ><strong>數量</strong>：</label>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    [disabled]="(box.giftsInfo[gi].giftAmount == 0)"
+                    (click)="decreaseGift(bi, gi)">-</button>
+                </div>
+                <input
+                  type="number"
+                  class="form-control text-center"
+                  [value]="box.giftsInfo[gi].giftAmount"
+                  disabled>
+                <div class="input-group-append" id="button-addon4">
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    [disabled]="(box.hasChoosenGift == box.boxChoosenAmount)"
+                    (click)="increaseGift(bi, gi)">+</button>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+
+    </ng-container>
+
+  </ng-container>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-6>
+          <button ion-button block color="danger" icon-end (click)="restAmount()">
+            全部清空
+            <ion-icon name="refresh"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col col-6>
+          <button ion-button block color="primary" icon-end (click)="nextPage()">
+            下一步
+            <ion-icon name="arrow-forward"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

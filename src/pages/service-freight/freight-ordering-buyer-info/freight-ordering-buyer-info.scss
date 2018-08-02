@@ -1,0 +1,75 @@
+page-freight-ordering-buyer-info {
+
+  .item-md {
+    padding-left: 0;
+  }
+
+  .label-md[stacked] {
+    font-size: 1.75rem;
+    color: #777;
+    font-weight: bolder;
+    padding-bottom: 0.75rem;
+  }
+
+  .item-inner {
+    padding: 0 !important;
+    ion-input, ion-textarea {
+      background-color: #f9f9f9;
+      border-radius: 0.5rem;
+      padding-left: 8px !important;
+      input{
+        font-size: 2rem !important;
+      }
+    }
+  }
+
+  .row {
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
+  }
+
+
+}
+
+// Toast Style
+.snackbar {
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: #dc3545;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 10px;
+  position: fixed;
+  z-index: 1000;
+  left: 50%;
+  top: 15%;
+  font-size: 11px;
+}
+
+.snackbar.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2s;
+  animation: fadein 0.5s, fadeout 0.5s 2s;
+}
+
+@-webkit-keyframes fadein {
+  from {top: 10%; opacity: 0;}
+  to {top: 15%; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {top: 10%; opacity: 0;}
+  to {top: 15%; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {top: 15%; opacity: 1;}
+  to {top: 10%; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {top: 15%; opacity: 1;}
+  to {top: 10%; opacity: 0;}
+}
