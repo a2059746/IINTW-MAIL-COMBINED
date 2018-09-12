@@ -8,6 +8,11 @@
 
   <ion-navbar>
     <ion-title>購買者資料確認</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="cancelProcdure()">
+        <ion-icon name="exit"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -17,8 +22,8 @@
   <!-- Toast -->
   <div [ngClass]="{'snackbar': true, 'show': isCtrl.isAllDone}">
     <p class="custom-alert" *ngIf='!twAddress'>請填寫箱子收件地址</p>
-    <p class="custom-alert" *ngIf="!foreignAddress && !this.isCtrl.choosePhoto">請填寫國外收件地址</p>
-    <p class="custom-alert" *ngIf="!foreignPhone">請填寫國外連絡電話</p>
+    <!-- <p class="custom-alert" *ngIf="!foreignAddress && !this.isCtrl.choosePhoto">請填寫國外收件地址</p>
+    <p class="custom-alert" *ngIf="!foreignPhone">請填寫國外連絡電話</p> -->
     <p class="custom-alert" *ngIf="!receivingTime">請選擇指定收件時間</p>
     <p class="custom-alert" *ngIf="!payMethod">請選擇付款方式</p>
   </div>
@@ -69,7 +74,7 @@
         <div class="input-group justify-content-between">
           <div class="input-group-prepend">
             <label class="custom-text-center">箱子收件地址</label>
-            <button id="ex1" [ngClass]="{'btn': true, 'ex-mark': true, 'text-primary':!isCtrl.exText, 'text-danger': isCtrl.exText1}" type="submit" (click)="exClick1()">[ ! ]</button>
+            <!-- <button id="ex1" [ngClass]="{'btn': true, 'ex-mark': true, 'text-primary':!isCtrl.exText, 'text-danger': isCtrl.exText1}" type="submit" (click)="exClick1()">[ ! ]</button> -->
           </div>
           <button class="btn btn-primary" type="submit" (click)="editAddress()" *ngIf="!isCtrl.isClickEditAddress">上傳門牌</button>
           <button class="btn btn-danger" type="submit" (click)="ensureAddress()" *ngIf="isCtrl.isClickEditAddress">取消</button>
@@ -87,7 +92,8 @@
       </div>
     </div>
     <div class="row">
-      <div class="text-danger" *ngIf="isCtrl.exText1">
+      <div class="text-danger">
+      <!-- <div class="text-danger" *ngIf="isCtrl.exText1"> -->
         <p class="mb-1">Please input a Taiwan address in the field or upload a photo of house number plate including a Taiwan address</p>
       </div>
 
@@ -108,7 +114,7 @@
 
 
 
-    <div class="mb-3 row">
+    <!-- <div class="mb-3 row">
       <div class="col-5 px-0">
         <div class="input-group">
           <div class="input-group-prepend">
@@ -132,7 +138,7 @@
       <div class="col-8 px-0">
         <input type="text" class="form-control" [(ngModel)]="foreignPhone">
       </div>
-    </div>
+    </div> -->
 
     <div class="row mb-3">
       <div class="col-4 px-0">
@@ -169,7 +175,7 @@
         <div class="input-group">
           <div class="input-group-prepend">
             <label class="custom-text-center">付款方式</label>
-            <button id="ex2" [ngClass]="{'btn': true, 'ex-mark': true, 'text-primary':!isCtrl.exText2, 'text-danger': isCtrl.exText2}" type="submit" (click)="exClick2()">[ ! ]</button>
+            <!-- <button id="ex2" [ngClass]="{'btn': true, 'ex-mark': true, 'text-primary':!isCtrl.exText2, 'text-danger': isCtrl.exText2}" type="submit" (click)="exClick2()">[ ! ]</button> -->
           </div>
         </div>
       </div>
@@ -189,7 +195,8 @@
       </div>
     </div>
     <div class="row">
-      <div class="text-danger" *ngIf="isCtrl.exText2">
+        <div class="text-danger">
+      <!-- <div class="text-danger" *ngIf="isCtrl.exText2"> -->
         <p class="mb-1">
           貨到付款：pay after the order arrived.
         </p>

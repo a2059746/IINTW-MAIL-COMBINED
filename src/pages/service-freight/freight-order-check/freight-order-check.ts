@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 
 /**
@@ -32,6 +32,8 @@ export class FreightOrderCheckPage {
     }>
   }>;
 
+  userCity: any;
+
   giftsInfo: any;
   totalGiftsPrice = 0;
   loadingClass: any;
@@ -55,6 +57,7 @@ export class FreightOrderCheckPage {
     console.log(this.data)
     this.orderInfo = this.data.orderInfo;
     this.giftsInfo = this.data.giftsInfo;
+    this.userCity = this.data.userCity;
 
     console.log('order Info')
     console.log(this.orderInfo)
@@ -72,12 +75,35 @@ export class FreightOrderCheckPage {
 
   }
 
+  @ViewChildren('boxes') boxesQueryList: QueryList<ElementRef>;
+  @ViewChildren('boxBtn') boxBtnQuertList: QueryList<ElementRef>;
+  boxElement: Array<ElementRef>;
+  boxBtnElement: Array<ElementRef>;
+
+  tempBoxElfIndex: any = 0;
+  clickBox(i) {
+    console.log('i:' + i);
+    if(this.tempBoxElfIndex != i) {
+      console.log('1')
+      this.boxElement[this.tempBoxElfIndex].nativeElement.hidden = true;
+      this.boxBtnElement[this.tempBoxElfIndex].nativeElement.classList.remove('btn-primary')
+      this.boxBtnElement[this.tempBoxElfIndex].nativeElement.classList.add('btn-light')
+    }
+    console.log('2')
+    this.boxElement[i].nativeElement.hidden = false;
+    this.boxBtnElement[i].nativeElement.classList.remove('btn-light')
+    this.boxBtnElement[i].nativeElement.classList.add('btn-primary')
+    this.tempBoxElfIndex = i;
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad FreightOrderCheckPage');
   }
 
   ionViewDidEnter() {
-
+    this.boxElement = this.boxesQueryList.map(x => x);
+    this.boxBtnElement = this.boxBtnQuertList.map(x => x);
+    console.log(this.boxElement)
   }
 
   /*** render function ***/
@@ -159,6 +185,14 @@ export class FreightOrderCheckPage {
     })
 
     this.loadingClass.present();
+  }
+
+
+  /*** Cancel Order Procdure ***/
+  cancelProcdure() {
+    let targetView;
+    targetView = this.navCtrl.getViews().filter(view=> view.id == 'FreightVendorPage')
+    targetView.length ? this.navCtrl.popTo(targetView[0]) : this.navCtrl.pop()
   }
 
 }

@@ -38,7 +38,7 @@ export class FreightOdererInfoCheckPage {
   twAddress: any = '';
   foreignAddress: any = '';
   foreignPhone: any = '';
-  receivingTime: any;
+  receivingTime: any = 'morning';
   payMethod: any;
 
   boxTWarea: any;
@@ -118,7 +118,7 @@ export class FreightOdererInfoCheckPage {
   _Box_State: any;
 
   submit() {
-    if( (!this.twAddress) || (!this.foreignAddress && !this.isCtrl.choosePhoto) || (!this.foreignPhone) || (!this.receivingTime) || (!this.payMethod) ) {
+    if( (!this.twAddress) || (!this.twAddress && !this.isCtrl.choosePhoto) || (!this.receivingTime) || (!this.payMethod) ) {
       this.notFinishedToast();
       return;
     }
@@ -274,6 +274,13 @@ export class FreightOdererInfoCheckPage {
       }
     })
     return areaName;
+  }
+
+  /*** Cancel Order Procdure ***/
+  cancelProcdure() {
+    let targetView;
+    targetView = this.navCtrl.getViews().filter(view=> view.id == 'FreightVendorPage')
+    targetView.length ? this.navCtrl.popTo(targetView[0]) : this.navCtrl.pop()
   }
 
 }

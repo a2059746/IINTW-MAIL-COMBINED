@@ -7,10 +7,12 @@
 <ion-header>
 
     <ion-navbar>
-      <ion-title>商品細節</ion-title>
+      <ion-title>商品確認</ion-title>
       <ion-buttons end>
-        <button ion-button (click)="closeModal()">Close</button>
-      </ion-buttons>
+          <button ion-button (click)="closeModal()">
+            close
+          </button>
+        </ion-buttons>
     </ion-navbar>
 
   </ion-header>
@@ -18,69 +20,108 @@
 
   <ion-content padding>
 
-    <ng-container *ngFor="let order of orderInfo; let i = index">
+    <div class="mb-5" *ngFor="let order of orderInfo; let i = index">
 
-      <p class="custom-title mb-2">{{ order.FBKey }}</p>
+      <div class="card pb-0 pt-3">
+          <div class="card-body text-center">
+            <p class="custom-title mb-2">{{ order.FBKey }}</p>
+          </div>
+      </div>
       <ion-card>
-        <div class="container w-100" style="height: 12rem; background-color: #e0e0e0;">
+        <div class="container w-100" style="height: 14rem; background-color: #fff5e8;">
           <div class="row h-100">
             <div class="col-6 mx-auto text-center align-self-center">
-              <img [src]="order.FBPics || ('assets/imgs/archive.png')" alt="">
+              <!-- <img [src]="order.FBPics || ('assets/imgs/archive.png')" alt=""> -->
+              <img src="assets/imgs/archive.png" alt="">
             </div>
           </div>
         </div>
 
-        <div class="container">
-
-          <div class="row pb-0">
-            <div class="mb-3 input-group">
-              <div class="input-group-prepend">
-                <label class="custom-text-center">箱子編號</label>
-              </div>
-              <input type="text" class="form-control" [value]="order.FBKey" disabled>
-            </div>
-            <div class="mb-3 input-group">
-              <div class="input-group-prepend">
-                <label class="custom-text-center">箱子尺寸</label>
-              </div>
-              <input type="text" class="form-control" [value]="order.FBSize" disabled>
-            </div>
-            <div class="mb-3 input-group">
-              <div class="input-group-prepend">
-                <label class="custom-text-center">所屬地區</label>
-              </div>
-              <input type="text" class="form-control" [value]="twAreaAllow(i)" disabled>
-            </div>
-            <div class="mb-3 input-group">
-              <div class="input-group-prepend">
-                <label class="custom-text-center">限制寄出</label>
-              </div>
-              <input type="text" class="form-control" [value]="bindCountry(i)" disabled>
-            </div>
-          </div>
-
-          <div class="mb-3 input-group">
-            <div class="input-group-prepend">
-              <label class="custom-text-center">預付款</label>
-            </div>
-            <input type="text" class="form-control" [value]="(order.FBDeposit * order.boxChoosenAmount)" disabled>
-          </div>
-          <div class="mb-3 input-group">
-            <div class="input-group-prepend">
-              <label class="custom-text-center">箱子尾款</label>
-            </div>
-            <input type="text" class="form-control" [value]="(order.FBBlance * order.boxChoosenAmount)" disabled>
-          </div>
-
-
-          <div class="mb-3 input-group">
-            <div class="input-group-prepend">
-              <label class="custom-text-center">購買數量</label>
-            </div>
-            <input type="text" class="form-control" [value]="order.boxChoosenAmount" disabled>
-          </div>
-
+        <div class="container my-3">
+          <table class="w-100">
+            <tr>
+              <th style="width: 30%;">
+                <div class="mb-3 input-group-prepend">
+                  <label class="custom-text-center">箱子編號</label>
+                </div>
+              </th>
+              <th>
+                <input type="text" class="mb-3 form-control" [value]="order.FBKey" disabled>
+              </th>
+            </tr>
+            <tr>
+              <th style="width: 30%;">
+                <div class="mb-3 input-group-prepend">
+                  <label class="custom-text-center">箱子尺寸</label>
+                </div>
+              </th>
+              <th>
+                <input type="text" class="mb-3 form-control" [value]="order.FBSize" disabled>
+              </th>
+            </tr>
+            <tr>
+              <th style="width: 30%;">
+                <div class="mb-3 input-group-prepend">
+                  <label class="custom-text-center">所屬地區</label>
+                </div>
+              </th>
+              <th>
+                <input type="text" class="mb-3 form-control" [value]="twAreaAllow(i)" disabled>
+              </th>
+            </tr>
+            <tr>
+              <th style="width: 30%;">
+                <div class="mb-3 input-group-prepend">
+                  <label class="custom-text-center">限制寄出</label>
+                </div>
+              </th>
+              <th>
+                <input type="text" class="mb-3 form-control" [value]="bindCountry(i)" disabled>
+              </th>
+            </tr>
+            <tr>
+              <th style="width: 30%;">
+                <div class="mb-3 input-group-prepend">
+                  <label class="custom-text-center">總預付款</label>
+                </div>
+              </th>
+              <th>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" [value]="(order.FBDeposit * order.boxChoosenAmount)" disabled>
+                  <div class="input-group-append">
+                    <span class="input-group-text">NTD</span>
+                  </div>
+                </div>
+              </th>
+            </tr>
+            <tr>
+              <th style="width: 30%;">
+                <div class="mb-3 input-group-prepend">
+                  <label class="custom-text-center">總箱子尾款</label>
+                </div>
+              </th>
+              <th>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" [value]="(order.FBBlance * order.boxChoosenAmount)" disabled>
+                  <div class="input-group-append">
+                    <span class="input-group-text">NTD</span>
+                  </div>
+                </div>
+              </th>
+            </tr>
+            <tr>
+              <th style="width: 30%;">
+                <div class="mb-3 input-group-prepend">
+                  <label class="custom-text-center">購買數量</label>
+                </div>
+              </th>
+              <th>
+                <input type="text" class="mb-3 form-control" [value]="order.boxChoosenAmount" disabled>
+              </th>
+            </tr>
+          </table>
         </div>
+
 
       </ion-card>
 
@@ -88,18 +129,34 @@
         <ion-grid>
           <ion-row>
             <ion-col col-5>
-              <img [src]=" gift.info.FGPics || ('assets/imgs/gift.png')" alt="">
+              <!-- <img [src]=" gift.info.FGPics || ('assets/imgs/gift.png')" alt=""> -->
+              <img src="assets/imgs/gift.png" alt="">
             </ion-col>
             <ion-col col-7>
-              <p word-wrap><strong>箱子編號</strong>：{{ order.FBKey }}</p>
-              <p word-wrap><strong>贈品名稱</strong>：{{ gift.info.FGName }}</p>
-              <p word-wrap><strong>加購價</strong>：{{ gift.info.FGPrice * gift.amount }}</p>
-              <p word-wrap><strong>數量</strong>：{{ gift.amount }}</p>
+              <table class="w-100">
+                <tr>
+                  <th>箱子編號</th>
+                  <td>{{ order.FBKey }}</td>
+                </tr>
+                <tr>
+                  <th>贈品名稱</th>
+                  <td>{{ gift.info.FGName }}</td>
+                </tr>
+                <tr>
+                  <th>加購總價</th>
+                  <td>{{ gift.info.FGPrice * gift.amount }}</td>
+                </tr>
+                <tr>
+                  <th>數量</th>
+                  <td>{{ gift.amount }}</td>
+                </tr>
+              </table>
+
             </ion-col>
           </ion-row>
         </ion-grid>
       </ion-card>
-    </ng-container>
+    </div>
 
   </ion-content>
 

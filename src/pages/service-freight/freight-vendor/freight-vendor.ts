@@ -1,3 +1,5 @@
+import { FreightService } from './../freight.service';
+import { Vendor } from './../freight.interface';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
@@ -15,16 +17,19 @@ import { AlertController } from 'ionic-angular';
   templateUrl: 'freight-vendor.html',
 })
 export class FreightVendorPage {
-  vendor: {
-    Name: string,
-    key: string
-  }
+  vendor: Vendor;
+  vendor_intro: string = '';
   constructor(
+    private freightService: FreightService,
     public navCtrl: NavController,
     public navParams: NavParams,
     public alertCtrl: AlertController
   ) {
-      this.vendor = this.navParams.get('vendor')
+      this.vendor = this.navParams.get('vendor');
+      console.log(this.vendor);
+      this.freightService.getVendorIntro(this.vendor.v_id, 'chinese').take(1).subscribe(res => {
+        this.vendor_intro = res.result.vi_intro;
+      })
       if(!this.vendor) {
         let alert = this.alertCtrl.create({
           title: '錯誤',
@@ -46,16 +51,12 @@ export class FreightVendorPage {
 
   goBoxsPage() {
     const data = {
-      key: this.vendor.key
+
     }
     this.navCtrl.push('FreightVendorboxsPage', data)
   }
 
-  goGiftsPage() {
-    const data = {
-      key: this.vendor.key
-    }
-    this.navCtrl.push('FreightVendorgiftsPage', data)
+  backBtn() {
+    this.navCtrl.pop();
   }
-
 }

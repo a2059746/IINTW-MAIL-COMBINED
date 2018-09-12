@@ -168,7 +168,8 @@ export class FreightVendorgiftsPage {
       orderInfo: this.choosenBox,
       giftsInfo: this.vendorGifts,
       boxTWarea: this.data.boxTWarea,
-      vendorKey: this.vendorKey
+      vendorKey: this.vendorKey,
+      userCity: this.data.userCity,
     });
   }
 
@@ -195,6 +196,12 @@ export class FreightVendorgiftsPage {
     this.loadingClass.present();
   }
 
+    /*** Cancel Order Procdure ***/
+    cancelProcdure() {
+      let targetView;
+      targetView = this.navCtrl.getViews().filter(view=> view.id == 'FreightVendorPage')
+      targetView.length ? this.navCtrl.popTo(targetView[0]) : this.navCtrl.pop()
+    }
 
 
 }

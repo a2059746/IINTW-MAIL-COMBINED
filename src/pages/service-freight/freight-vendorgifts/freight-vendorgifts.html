@@ -8,6 +8,11 @@
 
   <ion-navbar>
     <ion-title>贈品介紹</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="cancelProcdure()">
+        <ion-icon name="exit"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
   <div class="container">
     <div class="row p-0">
@@ -16,15 +21,19 @@
           <div class="input-group-prepend">
             <label class="custom-text-center">購買箱子數</label>
           </div>
-          <input type="text" class="form-control text-center" [value]="totalChoosenBoxes || '0'" disabled>
-        </div>
+          <p>
+            <input type="text" class="form-control text-center" style="background-color: #ffffff" [value]="totalChoosenBoxes || '0'" disabled>
+          </p>
+         </div>
       </div>
       <div class="col">
         <div class="input-group">
           <div class="input-group-prepend">
             <label class="custom-text-center">可選贈品數</label>
           </div>
-          <input type="text" [ngClass]="{'form-control': true, 'text-center': true, 'text-danger': (totalGiftsHasChoosed == totalGiftsCanChoosed)}" [value]="totalGiftsCanChoosed || '0'" disabled>
+          <p>
+            <input type="text" style="background-color: #ffffff" [ngClass]="{'form-control': true, 'text-center': true, 'text-danger': (totalGiftsHasChoosed == totalGiftsCanChoosed)}" [value]="totalGiftsCanChoosed || '0'" disabled>
+          </p>
         </div>
       </div>
       <div class="col">
@@ -32,11 +41,14 @@
           <div class="input-group-prepend">
             <label class="custom-text-center">已選贈品數</label>
           </div>
-          <input
-            type="text"
-            [ngClass]="{'form-control': true, 'text-center': true, 'text-success': (totalGiftsHasChoosed != totalGiftsCanChoosed), 'text-danger': (totalGiftsHasChoosed == totalGiftsCanChoosed)}"
-            [value]="totalGiftsHasChoosed || '0'"
-            disabled>
+          <p>
+            <input
+              type="text"
+              style="background-color: #ffffff"
+              [ngClass]="{'form-control': true, 'text-center': true, 'text-success': (totalGiftsHasChoosed != totalGiftsCanChoosed), 'text-danger': (totalGiftsHasChoosed == totalGiftsCanChoosed)}"
+              [value]="totalGiftsHasChoosed || '0'"
+              disabled>
+          </p>
         </div>
       </div>
     </div>
@@ -53,49 +65,80 @@
 
   <ng-container *ngIf="isCtrl.loadingReady">
 
-    <ng-container *ngFor="let box of choosenBox; let bi = index;">
+    <div class="mb-5" *ngFor="let box of choosenBox; let bi = index;">
 
-      <p class="custom-title mb-2">{{ box.FBKey }}</p>
-      <p class="text-success mb-2" *ngIf="(box.hasChoosenGift < box.boxChoosenAmount)">選擇贈品 {{ box.hasChoosenGift }} / {{ box.boxChoosenAmount }}</p>
-      <p class="text-danger mb-2" *ngIf="(box.hasChoosenGift == box.boxChoosenAmount)">已達到選購上限</p>
-      <ion-card *ngFor="let gift of gifts(bi);let gi = index;">
+      <div class="card py-0">
+        <div class="card-body text-center">
+          <p class="custom-title mb-2">{{ box.FBKey }}</p>
+          <p class="text-success mb-0" *ngIf="(box.hasChoosenGift < box.boxChoosenAmount)">選購贈品 {{ box.hasChoosenGift }} / {{ box.boxChoosenAmount }}</p>
+          <p class="text-danger mb-0" *ngIf="(box.hasChoosenGift == box.boxChoosenAmount)">已達到選購上限</p>
+        </div>
+      </div>
+      <ion-card class="m-0" *ngFor="let gift of gifts(bi);let gi = index;">
         <ion-grid>
           <ion-row>
             <ion-col col-5>
-              <img [src]=" gift.FGPics || ('assets/imgs/gift.png')" alt="">
+              <!-- <img [src]=" gift.FGPics || ('assets/imgs/gift.png')" alt=""> -->
+              <img src="assets/imgs/gift.png" alt="">
             </ion-col>
             <ion-col col-7>
-              <p word-wrap><strong>箱子編號</strong>：{{ box.FBKey }}</p>
-              <p word-wrap><strong>贈品名稱</strong>：{{ gift.FGName }}</p>
-              <p word-wrap><strong>加購價</strong>：{{ (gift.FGPrice * box.giftsInfo[gi].giftAmount) }}</p>
-              <div class="input-group mt-2">
-                <div class="input-group-prepend">
-                  <label class="custom-style" ><strong>數量</strong>：</label>
-                  <button
-                    type="button"
-                    class="btn btn-primary"
-                    [disabled]="(box.giftsInfo[gi].giftAmount == 0)"
-                    (click)="decreaseGift(bi, gi)">-</button>
-                </div>
-                <input
-                  type="number"
-                  class="form-control text-center"
-                  [value]="box.giftsInfo[gi].giftAmount"
-                  disabled>
-                <div class="input-group-append" id="button-addon4">
-                  <button
-                    type="button"
-                    class="btn btn-primary"
-                    [disabled]="(box.hasChoosenGift == box.boxChoosenAmount)"
-                    (click)="increaseGift(bi, gi)">+</button>
-                </div>
-              </div>
+
+
+                <table class="w-100">
+                    <tr>
+                      <th style="width: 40%">箱子編號</th>
+                      <td>
+                        {{ box.FBKey }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th style="width: 40%">贈品名稱</th>
+                      <td>
+                        {{ gift.FGName }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th style="width: 40%">加購價</th>
+                      <td>
+                        {{ gift.FGPrice }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th style="width: 40%">數量</th>
+                      <th>
+                        <div class="input-group mt-2">
+                          <div class="input-group-prepend">
+                            <button
+                              type="button"
+                              class="btn btn-primary"
+                              [disabled]="(box.giftsInfo[gi].giftAmount == 0)"
+                              (click)="decreaseGift(bi, gi)">-</button>
+                          </div>
+                          <input
+                            type="text"
+                            class="form-control text-center"
+                            [value]="box.giftsInfo[gi].giftAmount"
+                            disabled>
+                          <div class="input-group-append" id="button-addon4">
+                            <button
+                              type="button"
+                              class="btn btn-primary"
+                              [disabled]="(box.hasChoosenGift == box.boxChoosenAmount)"
+                              (click)="increaseGift(bi, gi)">+</button>
+                          </div>
+                        </div>
+                      </th>
+                    </tr>
+                  </table>
+
+
             </ion-col>
           </ion-row>
         </ion-grid>
+
       </ion-card>
 
-    </ng-container>
+    </div>
 
   </ng-container>
 

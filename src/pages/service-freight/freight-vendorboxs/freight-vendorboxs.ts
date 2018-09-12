@@ -206,7 +206,8 @@ export class FreightVendorboxsPage {
     this.navCtrl.push('FreightVendorgiftsPage', {
       vid: this.vendor.key,
       choosenBox: choosenBox,
-      boxTWarea: boxTWarea
+      boxTWarea: boxTWarea,
+      userCity: this.area_value,
     });
   }
 
@@ -243,6 +244,26 @@ export class FreightVendorboxsPage {
     } else {
       // console.log('show')
       return false;
+    }
+  }
+
+  /*** Cancel Order Procdure ***/
+  cancelProcdure() {
+    let targetView;
+    targetView = this.navCtrl.getViews().filter(view=> view.id == 'FreightVendorPage')
+    targetView.length ? this.navCtrl.popTo(targetView[0]) : this.navCtrl.pop()
+  }
+
+
+  incBox(i) {
+    if(this.boxList[i].boxChoosenAmount < this.boxList[i].OrderLimit) {
+      this.boxList[i].boxChoosenAmount ++;
+    }
+  }
+
+  decBox(i) {
+    if(this.boxList[i].boxChoosenAmount > 0) {
+      this.boxList[i].boxChoosenAmount --;
     }
   }
 

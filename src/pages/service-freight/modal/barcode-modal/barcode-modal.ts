@@ -92,7 +92,7 @@ export class BarcodeModalPage {
             if('PAYMENT_ID_3CODE' in supplier && 'PAYMENT_BANK_5CODE' in supplier) {
               PAYMENT_ID_3CODE = supplier.PAYMENT_ID_3CODE;
               PAYMENT_BANK_5CODE = supplier.PAYMENT_BANK_5CODE;
-              this.validdate = new Date(this.orderInfo.ValidDay);
+              this.validdate = new Date(validDate);
               let yy = (this.validdate.getFullYear() -  1911 + '').slice(1,3);
               let mmdd = this.validdate.toISOString().slice(5,10).replace('-', '');
               let code3_price = this.priceToCode(this.navParams.get('price').toString());
